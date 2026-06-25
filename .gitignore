@@ -1,0 +1,10 @@
+# Common ignores for all projects
+.venv/
+__pycache__/
+*.sqlite3
+
+# Optional local Python artifacts
+*.pyc
+*.pyo
+*.pyd
+
