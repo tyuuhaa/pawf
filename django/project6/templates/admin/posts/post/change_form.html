@@ -1,0 +1,12 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block content_title %}
+<div class="novel-form-header">
+  <div>
+    <p class="novel-kicker">Editor novel</p>
+    <h1 class="novel-page-title">{{ original|default:"Novel baru" }}</h1>
+  </div>
+  <a class="novel-cta" href="/studio-novel/">Kembali ke daftar</a>
+</div>
+{% endblock %}

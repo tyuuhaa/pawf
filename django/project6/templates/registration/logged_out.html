@@ -1,0 +1,76 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  .logout-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 18px 0 8px;
+  }
+
+  .logout-card {
+    padding: 28px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(24, 34, 48, 0.08);
+    box-shadow: 0 18px 40px rgba(24, 34, 48, 0.1);
+  }
+
+  .logout-title {
+    margin: 0 0 10px;
+    font-family: "Playfair Display", Georgia, serif;
+    color: #c96d2d;
+    font-size: clamp(2rem, 3vw, 2.5rem);
+  }
+
+  .logout-text {
+    margin: 0 0 22px;
+    color: #607084;
+    font-size: 1.02rem;
+    line-height: 1.7;
+  }
+
+  .logout-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .logout-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 999px;
+    background: rgba(53, 95, 153, 0.12);
+    color: #355f99 !important;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .logout-back:hover {
+    background: rgba(53, 95, 153, 0.18);
+    text-decoration: none;
+  }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+{% block nav-sidebar %}{% endblock %}
+
+{% block content %}
+<div class="logout-wrap">
+  <div class="logout-card">
+    <p class="logout-title">{% translate "Keluar" %}</p>
+    <p class="logout-text">{% translate "Terima kasih sudah menggunakan Studio Novel. Halaman ini tetap menyediakan jalan kembali ke beranda." %}</p>
+    <div class="logout-actions">
+      <a class="logout-back" href="/">{% translate "Kembali ke halaman utama" %}</a>
+      <a href="{% url 'admin:index' %}">{% translate "Masuk kembali" %}</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "admin/auth/user/change_form.html" %}
+{% load i18n static %}
+
+{% block form_top %}
+  {% if not is_popup %}
+    <p class="novel-muted">Setelah pengguna dibuat, opsi tambahan akan bisa diatur lebih lanjut.</p>
+  {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'admin/css/unusable_password_field.css' %}">
+{% endblock %}

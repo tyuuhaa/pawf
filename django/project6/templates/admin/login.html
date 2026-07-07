@@ -1,0 +1,14 @@
+{% extends "admin/login.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/admin-theme.css' %}">
+{% endblock %}
+
+{% block title %}Login | Aplikasi Novel{% endblock %}
+
+{% block content_title %}
+<h1 class="admin-login-title">Masuk ke Studio Novel</h1>
+<p class="novel-muted">Gunakan akun yang sesuai untuk mengelola novel dan akses panel admin.</p>
+{% endblock %}

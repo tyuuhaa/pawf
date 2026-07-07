@@ -1,0 +1,66 @@
+﻿{% extends "base.html" %}
+{% block title %}{{ object.title }} | Detail Novel{% endblock %}
+{% block content %}
+<section class="detail-shell minimal-detail">
+  <a class="back-link" href="{% url 'home' %}">&larr; Kembali</a>
+
+  <section class="detail-hero minimal-detail-hero">
+    <div class="detail-hero-copy">
+      <span class="eyebrow">{{ object.genre }}</span>
+      <h1>{{ object.title }}</h1>
+      <p class="detail-author">{{ object.author }}</p>
+      <div class="stars stars-lg">{{ object.rating_stars }}</div>
+    </div>
+
+    <div class="detail-score">
+      <div class="score-ring">
+        <span>{{ recommendation_score }}</span>
+        <small>/100</small>
+      </div>
+      <div>
+        <span class="panel-label">Kategori</span>
+        <strong>{{ recommendation_label }}</strong>
+      </div>
+    </div>
+  </section>
+
+  <div class="detail-grid">
+    <article class="detail-card">
+      <h2>Ringkasan</h2>
+      <div class="detail-metrics">
+        <div>
+          <span class="stat-label">Status</span>
+          <strong>{{ object.get_status_display }}</strong>
+        </div>
+        <div>
+          <span class="stat-label">Tahun</span>
+          <strong>{% if object.year_read %}{{ object.year_read }}{% else %}-{% endif %}</strong>
+        </div>
+        <div>
+          <span class="stat-label">Skor</span>
+          <strong>{{ recommendation_score }}/100</strong>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-head">
+          <span class="stat-label">Progress</span>
+          <strong>{{ reading_progress }}%</strong>
+        </div>
+        <div class="progress-bar">
+          <span style="width: {{ reading_progress }}%"></span>
+        </div>
+      </div>
+    </article>
+
+    <aside class="detail-card">
+      <h2>Catatan</h2>
+      {% if object.review %}
+      <p class="review review-full">{{ object.review }}</p>
+      {% else %}
+      <p class="review review-full muted">Belum ada review.</p>
+      {% endif %}
+    </aside>
+  </div>
+</section>
+{% endblock %}

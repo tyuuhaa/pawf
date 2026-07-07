@@ -1,0 +1,13 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block content_title %}
+<div class="novel-form-header">
+  <div>
+    <p class="novel-kicker">Editor pengguna</p>
+    <h1 class="novel-page-title">{{ original|default:"Pengguna baru" }}</h1>
+    <p class="novel-muted">Atur akun, status staf, dan akses dengan tampilan yang tetap satu tema.</p>
+  </div>
+  <a class="novel-cta" href="/studio-novel/">Kembali ke daftar</a>
+</div>
+{% endblock %}

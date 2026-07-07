@@ -1,0 +1,38 @@
+{% extends "admin/change_list.html" %}
+{% load admin_urls i18n %}
+
+{% block content_title %}
+<div class="novel-page-header">
+  <div>
+    <p class="novel-kicker">Daftar novel yang sudah aku tambah</p>
+    <h1 class="novel-page-title">{{ title }}</h1>
+    <p class="novel-muted">Tampilan ini dibuat untuk fokus ke data yang paling sering dipakai: status baca, rating, dan pemilik novel.</p>
+  </div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <a class="novel-backlink" href="/studio-novel/">← Kembali ke daftar</a>
+    <a class="novel-cta" href="{% url 'admin:studio_post_add' %}">+ Tambah novel</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="novel-summary-grid" style="margin-bottom:18px;">
+  <div class="novel-info-card">
+    <strong>Total novel</strong>
+    <div class="novel-stat-value" style="font-size:1.6rem;">{{ total_books }}</div>
+  </div>
+  <div class="novel-info-card">
+    <strong>Selesai dibaca</strong>
+    <div class="novel-stat-value" style="font-size:1.6rem;">{{ finished_books }}</div>
+  </div>
+  <div class="novel-info-card">
+    <strong>Sedang dibaca</strong>
+    <div class="novel-stat-value" style="font-size:1.6rem;">{{ reading_now }}</div>
+  </div>
+  <div class="novel-info-card">
+    <strong>Rating tinggi</strong>
+    <div class="novel-stat-value" style="font-size:1.6rem;">{{ strong_recommendations }}</div>
+  </div>
+</section>
+{{ block.super }}
+{% endblock %}

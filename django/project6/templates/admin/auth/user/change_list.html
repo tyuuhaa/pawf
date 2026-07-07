@@ -1,0 +1,16 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block content_title %}
+<div class="novel-page-header">
+  <div>
+    <p class="novel-kicker">Daftar pengguna</p>
+    <h1 class="novel-page-title">{{ title }}</h1>
+    <p class="novel-muted">Kelola akun dan status staf dalam tampilan yang tetap menyatu dengan halaman utama.</p>
+  </div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <a class="novel-backlink" href="/studio-novel/">← Kembali ke daftar</a>
+    <a class="novel-cta" href="{% url 'admin:studio_user_add' %}">+ Tambah pengguna</a>
+  </div>
+</div>
+{% endblock %}

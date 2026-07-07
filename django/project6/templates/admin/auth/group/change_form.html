@@ -1,0 +1,13 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block content_title %}
+<div class="novel-form-header">
+  <div>
+    <p class="novel-kicker">Editor grup</p>
+    <h1 class="novel-page-title">{{ original|default:"Grup baru" }}</h1>
+    <p class="novel-muted">Kelola nama grup dan hak akses dalam tampilan yang konsisten dengan panel utama.</p>
+  </div>
+  <a class="novel-cta" href="/studio-novel/">Kembali ke daftar</a>
+</div>
+{% endblock %}

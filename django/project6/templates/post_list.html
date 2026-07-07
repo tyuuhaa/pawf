@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block title %}Novel Saya | Reading Notes{% endblock %}
+{% block content %}
+<section class="hero hero-clean">
+  <div class="hero-copy compact">
+    <span class="eyebrow">Novel pribadi</span>
+    <h1>Daftar novel yang sudah dibaca, dinilai, dan disimpan rapi.</h1>
+    <p class="lead">Semua data penting ada di satu halaman: ringkasan, novel milik akun ini, dan daftar novel terbaru.</p>
+
+    <div class="hero-actions">
+      <a class="button primary" href="{% url 'admin:studio_post_add' %}">Tambah novel</a>
+      <a class="button ghost" href="#daftar-saya">Novel saya</a>
+      <a class="button ghost" href="#daftar-novel">Lihat daftar</a>
+    </div>
+
+    <div class="quick-stats minimal">
+      <div class="quick-stat">
+        <span>Total</span>
+        <strong>{{ total_books }}</strong>
+      </div>
+      <div class="quick-stat">
+        <span>Selesai</span>
+        <strong>{{ finished_books }}</strong>
+      </div>
+      <div class="quick-stat">
+        <span>Rekomendasi</span>
+        <strong>{{ strong_recommendations }}</strong>
+      </div>
+      <div class="quick-stat">
+        <span>Sedang baca</span>
+        <strong>{{ reading_now }}</strong>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="quick-stat">
+        <span>Novel saya</span>
+        <strong>{{ my_books_count }}</strong>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <aside class="hero-panel">
+    <div class="panel-card featured-panel minimal">
+      <span class="panel-label">Terbaru</span>
+      {% if top_pick %}
+      <h2><a href="{{ top_pick.get_absolute_url }}">{{ top_pick.title }}</a></h2>
+      <p>{{ top_pick.author }}</p>
+      <div class="mini-metrics">
+        <span>{{ top_pick.genre }}</span>
+        <span>{{ top_pick.get_status_display }}</span>
+        <span>{{ top_pick.rating }}/5</span>
+      </div>
+      {% else %}
+      <h2>Belum ada data</h2>
+      <p>Tambahkan novel pertama dari admin.</p>
+      {% endif %}
+    </div>
+  </aside>
+</section>
+
+{% if user.is_authenticated %}
+<section id="daftar-saya" class="my-books-section">
+  <div class="section-heading minimal">
+    <div>
+      <p class="eyebrow">Novel saya</p>
+      <h2>Novel yang dibuat oleh akun ini</h2>
+    </div>
+    <a class="detail-link" href="{% url 'admin:studio_post_add' %}">+ Tambah novel</a>
+  </div>
+
+  {% if my_books %}
+  <div class="my-books-grid">
+    {% for book in my_books|slice:":4" %}
+    <article class="my-book-card">
+      <div>
+        <span class="genre-badge">{{ book.genre }}</span>
+        <h3><a class="book-link" href="{{ book.get_absolute_url }}">{{ book.title }}</a></h3>
+        <p class="book-meta">{{ book.author }}</p>
+      </div>
+      <div class="mini-metrics">
+        <span>{{ book.get_status_display }}</span>
+        <span>{{ book.rating }}/5</span>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-strip">
+    <p>Belum ada novel milik akun ini.</p>
+  </div>
+  {% endif %}
+</section>
+{% endif %}
+
+<section class="toolbar compact-toolbar">
+  <form method="get" class="toolbar-form compact">
+    <label class="field search-field">
+      <span>Cari</span>
+      <input type="search" name="q" value="{{ query }}" placeholder="Judul, penulis, genre">
+    </label>
+
+    <label class="field">
+      <span>Status</span>
+      <select name="status">
+        <option value="">Semua</option>
+        <option value="selesai" {% if selected_status == "selesai" %}selected{% endif %}>Selesai</option>
+        <option value="membaca" {% if selected_status == "membaca" %}selected{% endif %}>Sedang</option>
+        <option value="ingin" {% if selected_status == "ingin" %}selected{% endif %}>Ingin</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Rating</span>
+      <select name="min_rating">
+        <option value="">Semua</option>
+        <option value="5" {% if selected_min_rating == "5" %}selected{% endif %}>5</option>
+        <option value="4" {% if selected_min_rating == "4" %}selected{% endif %}>4+</option>
+        <option value="3" {% if selected_min_rating == "3" %}selected{% endif %}>3+</option>
+        <option value="2" {% if selected_min_rating == "2" %}selected{% endif %}>2+</option>
+      </select>
+    </label>
+
+    <button class="button primary" type="submit">Filter</button>
+    <a class="button ghost" href="{% url 'home' %}">Reset</a>
+  </form>
+</section>
+
+{% if query or selected_status or selected_min_rating %}
+<section class="active-filters">
+  <span class="active-label">Aktif</span>
+  <div class="active-chips">
+    {% if query %}<span class="chip">{{ query }}</span>{% endif %}
+    {% if selected_status %}<span class="chip">{{ selected_status }}</span>{% endif %}
+    {% if selected_min_rating %}<span class="chip">{{ selected_min_rating }}+</span>{% endif %}
+  </div>
+</section>
+{% endif %}
+
+<section id="daftar-novel" class="library-grid">
+  {% for post in post_list %}
+  <article class="book-card minimal-card">
+    <div class="book-card-head">
+      <div>
+        <span class="genre-badge">{{ post.genre }}</span>
+        <h2><a class="book-link" href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+        <p class="book-meta">{{ post.author }}</p>
+      </div>
+      <div class="rating-flag">
+        <strong>{{ post.rating }}/5</strong>
+        <span>{{ post.rating_stars }}</span>
+      </div>
+    </div>
+
+    <div class="book-summary">
+      <span class="status-pill">{{ post.get_status_display }}</span>
+      {% if post.year_read %}<span class="status-pill soft">{{ post.year_read }}</span>{% endif %}
+    </div>
+
+    <div class="book-footer">
+      <div class="progress-wrap compact">
+        <div class="progress-head">
+          <span>Progress</span>
+          <strong>{{ post.reading_progress }}%</strong>
+        </div>
+        <div class="progress-bar">
+          <span style="width: {{ post.reading_progress }}%"></span>
+        </div>
+      </div>
+      <a class="detail-link" href="{{ post.get_absolute_url }}">Detail</a>
+    </div>
+  </article>
+  {% empty %}
+  <div class="empty-state">
+    <h2>Belum ada novel.</h2>
+    <p>Tambah data dari admin untuk mulai dipakai.</p>
+  </div>
+  {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/admin-theme.css' %}">
+{% endblock %}
+
+{% block title %}{{ site_title|default:_('Aplikasi Novel') }}{% endblock %}
+
+{% block branding %}
+<div class="admin-brand">
+  <h1 id="site-name"><a href="{% url 'admin:index' %}">Aplikasi Novel Admin</a></h1>
+  <p class="novel-muted" style="margin:0;">Ruang kendali novel, rating, dan akun.</p>
+</div>
+{% endblock %}
+
+{% block welcome-msg %}{% endblock %}
+
+{% block userlinks %}
+  <a href="/">BERANDA</a> |
+  <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+    {% csrf_token %}
+    <button type="submit">LOGOUT</button>
+  </form>
+{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
